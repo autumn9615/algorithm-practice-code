@@ -47,13 +47,13 @@
 // ============================================================================
 
 import java.util.*;
-import java.io.*;
 
 public class Main {
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         // 定义一个数拿来存输入的n
         int n = sc.nextInt();
+        sc.close();
         // 定义一个数拿来存和
         long sum = 0;
         for(int i = 0; i < 25; i++){

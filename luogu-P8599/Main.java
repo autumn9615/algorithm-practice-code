@@ -46,7 +46,6 @@
 //         100 的那 11 种表示每一个都是 b > c（比如题目给的 69258/714）。
 // ============================================================================
 import java.util.*;
-import java.io.*;
 
 public class Main {
     static int N;                              // 要表示的那个数
@@ -56,6 +55,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         N = sc.nextInt();
+        sc.close();
         dfs(1, 0, 0, 0, 0);
         System.out.println(ans);
     }

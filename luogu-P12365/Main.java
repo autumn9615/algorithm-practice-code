@@ -71,6 +71,7 @@ public class Main {
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         String s = sc.nextLine();
+        sc.close();
         // 拿到对折的次数
         int n = s.charAt(1) - '0';
         // 定义初始的长和宽两边

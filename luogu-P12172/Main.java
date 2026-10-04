@@ -75,7 +75,6 @@
 // ============================================================================
 
 import java.util.*;
-import java.io.*;
 
 public class Main {
     public static void main(String[] args){
@@ -84,6 +83,7 @@ public class Main {
         int w = sc.nextInt();
         int h = sc.nextInt();
         int v = sc.nextInt();
+        sc.close();
         // 打印出上半块，竖笔画
         for(int i = 0; i < h; i++){
             // 打印行
