@@ -91,6 +91,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         long n = sc.nextLong();
         long m = sc.nextLong();
+        sc.close();
         long blocks = (m + 31) / 32; // 每行需要多少个 32 位块
         long bytesPerRow = blocks * 4; // 每行占用的字节数
         long totalBytes = n * bytesPerRow; // 总字节数
