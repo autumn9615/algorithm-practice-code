@@ -128,5 +128,6 @@ public class Main {
                 System.out.println("DRAW");
             }
         }
+        sc.close();
     }
 }
