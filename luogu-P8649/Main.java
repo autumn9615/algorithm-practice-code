@@ -154,6 +154,7 @@ public class Main {
             // 更新余数为 cur 的前缀和的出现次数
             cnt[cur]++;
         }
+        sc.close();
         System.out.println(ans);
     }
 }
