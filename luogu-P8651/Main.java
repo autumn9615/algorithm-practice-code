@@ -211,9 +211,10 @@ public class Main {
 
             // 错误例子：没有做到月份“06”或者日期“09”，前面的那个 0 被丢掉了
             // System.out.println(yyyy + "-" + mm + "-" + dd);
-            
+
             System.out.println(String.format("%04d-%02d-%02d", yyyy, mm, dd));
         }
+        sc.close();
     }
     static void add(int YY, int MM, int DD){
         // 补全年份
