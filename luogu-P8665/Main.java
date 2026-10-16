@@ -184,30 +184,44 @@ import java.util.*;
 public class Main {
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
+        // 读 T，表示输入数据组数
         int T = Integer.parseInt(sc.nextLine().trim());
         for (int i = 0; i < T; i++) {
+            // 读两行，分别是去程和回程的起降时间
             int d1 = getDuration(sc.nextLine());
             int d2 = getDuration(sc.nextLine());
+            // 计算飞行时间（秒）
             int fly = (d1 + d2) / 2;
+            // h是小时，m是分钟，sec是秒
             int h = fly / 3600, m = fly / 60 % 60, sec = fly % 60;
+            // 按 hh:mm:ss 补零输出
             System.out.printf("%02d:%02d:%02d%n", h, m, sec);
         }
         sc.close();
     }
+    // 定义一个方法，计算飞行时间
     static int getDuration(String line) {
+        // 按空白切分字符串，得到起飞时间、降落时间和可能的跨天标记
         String[] s = line.trim().split("\\s+");
+        // 把起飞时间和降落时间转换为秒数
         int up = toSec(s[0]);
         int down = toSec(s[1]);
+        // 如果有跨天标记，给降落时间加上 86400 秒的整数倍
         if (s.length == 3) {
             down += (s[2].charAt(2) - '0') * 86400;
         }
+        // 返回飞行时间（秒）
         return down - up;
     }
+    // 定义一个方法，把时间字符串转换为秒数
     static int toSec(String time) {
+        // 按冒号切分时间字符串，得到小时、分钟和秒
         String[] t = time.split(":");
+        // 把小时、分钟和秒转换为整数，并计算总秒数
         int h = Integer.parseInt(t[0]);
         int m = Integer.parseInt(t[1]); 
         int sec = Integer.parseInt(t[2]);
+        // 返回总秒数
         return h * 3600 + m * 60 + sec;
     }
 }
