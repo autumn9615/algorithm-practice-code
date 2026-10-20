@@ -73,8 +73,6 @@
 //     - 时间复杂度 O(log n)，空间复杂度 O(1)（只用了几个下标变量）。
 // ============================================================================
 
-import java.util.*;
-
 public class Solution {
     public int search(int[] nums, int target){
         int left = 0;
