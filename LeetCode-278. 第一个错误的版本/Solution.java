@@ -99,4 +99,9 @@ public class Solution extends VersionControl {
         // 循环结束时 left == right，返回 left
         return (int)left;
     }
+
+    private boolean isBadVersion(int mid) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isBadVersion'");
+    }
 }

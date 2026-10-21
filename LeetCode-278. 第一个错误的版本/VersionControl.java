@@ -1,0 +1,6 @@
+/**
+ * VersionControl
+ */
+public class VersionControl {
+
+}
