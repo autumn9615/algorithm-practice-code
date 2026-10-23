@@ -101,7 +101,6 @@ public class Solution extends VersionControl {
     }
 
     private boolean isBadVersion(int mid) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'isBadVersion'");
     }
 }
