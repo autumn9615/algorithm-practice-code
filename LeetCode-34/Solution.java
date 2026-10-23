@@ -101,12 +101,54 @@
 
 class Solution {
     public int[] searchRange(int[] nums, int target) {
-        int start = 0;
-        int end = nums.length - 1;
-        int[] ans = new int[2];
-        while (start <= end) {
-            int mid = start + (end - start) / 2;
-            
+        // 取左右边界
+        int left = 0;
+        int right = nums.length - 1;
+        // 初始化1，如果没找到就是这个值，直接返回
+        int[] ans = { -1, -1 };
+        // 如果数组为空，直接返回这个值
+        if(nums.length == 0){
+            return ans;
         }
+        // 二分查找左边界
+        while (left < right) {
+            // 防止溢出，要取中间偏左，正常二分找第一个出现相同的位置，就是左边界
+            int mid = left + (right - left) / 2;
+            if(nums[mid] >= target){
+                // 如果mid >= target，说明mid可能是左边界，保留在区间里
+                right = mid;
+            }else{
+                // 如果mid < target，说明mid不可能在左边界，mid+1及右边都不可能是答案
+                left = mid + 1;
+            }
+        }
+        // 循环结束后，left = right，此时left就是左边界也是右边界
+        // 如果左边界不等于target，说明数组中没有target，直接返回
+        if(nums[left] != target){
+            return ans;
+        }
+        // 确定了左边界，开始二分查找右边界
+        ans[0] = left;
+
+        // 此时初始化的左边界就可以取前面算出来的left
+        // 右边界还是取nums.length - 1
+        left = ans[0];
+        right = nums.length - 1;
+        // 再次开始二分查找右边界
+        while (left < right) {
+            // 防止溢出，要取中间偏右，不能正常的二分查找，不然的话会死循环
+            int mid = left + (right - left + 1) / 2;
+            // 如果mid <= target，说明mid可能是右边界，保留在区间里
+            if(nums[mid] <= target){
+                left = mid;
+            }else{
+                // 如果mid > target，说明mid不可能在右边界，mid-1及左边都不可能是答案
+                right = mid - 1;
+            }
+        }
+        // 循环结束后，left = right，此时left就是右边界也是左边界
+        ans[1] = left;
+        // 返回结果
+        return ans;
     }
 }
