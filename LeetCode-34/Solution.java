@@ -152,3 +152,42 @@ class Solution {
         return ans;
     }
 }
+
+// 第二种写法，用通用模板
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        // 取左右边界
+        int left = 0;
+        int right = nums.length;
+        // 初始化答案数组，如果没找到就是这个值，直接返回
+        int[] ans = { -1, -1 };
+        // 如果数组为空，直接返回这个值
+        if(nums.length == 0){
+            return ans;
+        }
+        // 二分查找左边界,就是第一个找到的值
+        left = lowerBound(nums, target);
+        // 如果左边界不等于target，说明数组中没有target，直接返回
+        if(nums[left] != target){
+            return ans;
+        }
+        // 确定了左边界，开始二分查找右边界，就是最后一个<= target的值，就要查找的是大target一个数的位置再减一就是了
+        right = lowerBound(nums, target + 1) - 1;
+        // 返回结果
+        return new int[]{left, right};
+    }
+    // 定义方法，用于找到第一个>=target的值的位置
+    public int lowerBound(int[] nums, int target){
+        int left = 0;
+        int right = nums.length;
+        while(left < right){
+            int mid = left + (right - left) / 2;
+            if (nums[mid] < target) {
+            left = mid + 1;                       // 不满足 → 跳过 mid
+            } else {
+                right = mid;                          // 可能满足 → 保留 mid
+            }
+        }
+        return left;
+    }
+}
