@@ -150,7 +150,59 @@
 // ============================================================================
 
 class Solution {
+    // 思路：山脉数组一定是"先严格上升、后严格下降"，所以只看相邻两个元素
+    // arr[i] 和 arr[i+1] 就能判断 i 在山的哪一边：
+    //   arr[i] <= arr[i+1] → 还在上坡，峰一定在 i 的右边；
+    //   arr[i] >  arr[i+1] → 已经在下坡，峰在 i 或者 i 的左边。
+    // 这个判断随着 i 增大是"先真后假"的（前半段全是上坡、后半段全是下坡），
+    // 是单调的，所以可以二分：找"第一个下坡的位置"，它就是峰顶。
+    // 和 34 题的 lowerBound 是同一个模板，只是把"nums[mid] 和 target 比"
+    // 换成了"arr[mid] 和 arr[mid+1] 比"。
     public int peakIndexInMountainArray(int[] arr) {
-        
+        // 取左右边界，用开区间模板（和 875 一样）：
+        // left 永远是"已知在峰左边"的位置，right 永远是"已知在峰右边"的位置，
+        // 答案一定落在 (left, right) 里面，等它俩相邻时 right 就是答案。
+        //
+        // left = -1 是哨兵：峰不可能在下标 0（n >= 3 时 arr[0] < arr[1]），
+        //   所以"峰在 -1 右边"永远成立，循环里也不会真的去访问 arr[-1]。
+        // right = arr.length 也是哨兵：峰最多到 n-2（峰必须满足
+        //   arr[peak] > arr[peak+1]，所以 peak + 1 <= n-1），
+        //   所以"峰在 n 左边"也永远成立，同样不会真的去访问 arr[n]。
+        //   （写成 arr.length - 1 也行，区间紧一点，结果完全一样）
+        int left = -1;
+        int right = arr.length;
+        // 题目保证 n >= 3，这个分支其实走不到，纯属保险：
+        // n = 1 时唯一的下标 0 就是峰
+        if(arr.length == 1){
+            return 0;
+        }
+        // 模板二分：区间是开区间 (left, right)，left + 1 == right 时区间里
+        // 只剩一个位置，循环结束
+        while (left + 1 < right){
+            // 取中点，left + (right - left) / 2 是防溢出的写法
+            // （本题 n <= 10^5，其实不会溢出，养成习惯而已）
+            //
+            // 这里读 arr[mid+1] 不会越界，原因：
+            //   mid < right <= n，所以 mid <= n-1。mid 真要取到 n-1，
+            //   得先让 left = n-2，可 left 只在"上坡"时才会被更新成 mid，
+            //   山脉数组里最后一个上坡下标是 n-3，所以 left <= n-3、
+            //   mid <= n-2，arr[mid+1] 最远只读到 arr[n-1]，安全。
+            int mid = left + (right - left) / 2;
+            // arr[mid] <= arr[mid+1]：mid 还在上坡，峰一定在 mid 右边，
+            // mid 自己肯定不是峰，可以放心排除掉，所以 left = mid
+            // （山脉数组相邻元素不会相等，这里写 <= 还是 < 结果一样）
+            if(arr[mid] <= arr[mid+1]){
+                left = mid;
+            }else{
+                // arr[mid] > arr[mid+1]：mid 已经在下坡了，峰只可能在 mid
+                // 或者 mid 的左边，mid 自己还要留着，所以是 right = mid
+                // （不是 mid - 1，因为 mid 本身可能就是峰）
+                right = mid;
+            }
+        }
+        // 循环结束时 left + 1 == right：
+        // left 是最后一个"上坡"的位置，right 就是第一个"下坡"的位置，
+        // 也就是峰顶下标，直接返回 right
+        return right;
     }
 }
