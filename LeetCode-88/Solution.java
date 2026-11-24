@@ -179,3 +179,40 @@ class Solution {
         return;
     }
 }
+
+// =================================方法二========================================
+
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        // 先判定特殊情况
+        // 下面个数组nums2是空的
+        if(n == 0){
+            return;
+        }
+        // 上面个数组nums1是空的
+        if(m == 0){
+            for(int i = 0;i < n;i++){
+                nums1[i] = nums2[i];
+            }
+            return;
+        }
+        // 两个数组都不为空，考虑正常情况
+        // 设置两个指针分别指两个数组的最后一个数
+        int i = m - 1;  //nums1的最后一个元素
+        int j = n - 1;  //nums2的最后一个元素
+        // 设置一个指针表示数组一的最后一个空位
+        int k = m + n - 1;// 结果要填的位置，从 nums1 的最后一格开始往前
+        // 循环比较大小，将大的数放到数组一的末尾
+        while (j >= 0){
+            if(i >= 0 && nums1[i] > nums2[j]){
+                // 数组一的更大，放到数组一的末尾
+                nums1[k--] = nums1[i--];
+            }else{
+                // 数组二的更大，放到数组一的末尾
+                nums1[k--] = nums2[j--];
+            }
+        }
+        // 返回答案
+        return;
+    }
+}
